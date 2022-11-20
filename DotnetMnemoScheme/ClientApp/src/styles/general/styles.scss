@@ -1,0 +1,35 @@
+@use '../functions' as global-functions;
+
+@use '../theme' as global-theme;
+
+@use './variables';
+
+html, body {
+  height: 100vh;
+  margin: 0;
+  font-family: 'Segoe UI';
+}
+
+[data-layout], [data-page] {
+  opacity: 1;
+  transition: opacity 250ms linear;
+
+  &.page-unmount {
+    opacity: 0;
+  }
+}
+
+.main-content {
+  *::selection {
+    color: global-functions.property(text-primary, global-theme.$text-primary);
+    background-color: global-functions.property(text-background-primary, global-theme.$text-background-primary);
+  }
+}
+
+.mb-1 {
+  margin-bottom: variables.$margin-bottom;
+}
+
+.mt-1 {
+  margin-top: variables.$margin-top;
+}

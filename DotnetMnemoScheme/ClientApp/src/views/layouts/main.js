@@ -62,7 +62,7 @@ class MainLayout extends BaseLayout {
    * @param {boolean} firstLoad 
    */
   async load(lang, page, firstLoad) {
-    console.log(lang, page, firstLoad)
+    console.log(lang, page, firstLoad, this.node, this.content)
   }
 }
 

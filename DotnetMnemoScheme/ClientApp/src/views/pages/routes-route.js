@@ -57,7 +57,7 @@ const { loadContent } = require('../../helpers/general')
    * @param {boolean} firstLoad 
    */
   async load(lang, page, firstLoad) {
-    console.log(lang, page, firstLoad)
+    console.log(lang, page, firstLoad, this.node)
   }
 }
 

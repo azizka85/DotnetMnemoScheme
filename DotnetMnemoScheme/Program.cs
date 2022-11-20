@@ -17,6 +17,8 @@ app.UseStaticFiles();
 
 app.UseMiddleware<WebApiExceptionMiddleware>();
 
+app.UseRouting();
+
 app.MapControllerRoute
 (
     name: "translation",

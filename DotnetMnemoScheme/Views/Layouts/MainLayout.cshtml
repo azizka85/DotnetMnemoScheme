@@ -1,8 +1,20 @@
 ﻿@model DotnetMnemoScheme.ViewModels.Layouts.MainLayoutModel
 
-<h1>Main layout - @Model.Lang</h1>
-
-@if(Model.Content != null) 
-{
-    <partial name="@Model.Content" model="@Model.ContentData" />
+@{
+    var navigation = Context.Request.Query["navigation"] == new StringValues("1");
 }
+
+<div data-layout="main-layout">
+    <aside class="left-bar @(navigation ? "left-bar-open" : "")">
+        <div class="left-bar-header"></div>
+        <div class="left-bar-toolbar"></div>
+        <div class="left-bar-toolbar"></div>
+        <div class="left-bar-toolbar"></div>
+    </aside>
+    <main class="main-content">
+        @if (Model.Content != null)
+        {
+            <partial name="@Model.Content" model="@Model.ContentData" />
+        }
+    </main>    
+</div>
