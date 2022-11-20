@@ -1,0 +1,44 @@
+﻿@inject DotnetMnemoScheme.Models.Settings settings
+@inject DotnetMnemoScheme.Helpers.LanguageHelper langHelper
+@model DotnetMnemoScheme.ViewModels.Layouts.DefaultLayoutModel
+
+@{
+    var settingsJson = JsonSerializer.Serialize(settings);
+    var langData = JsonSerializer.Serialize(settings.Languages[Model.Lang].Translator.Data);
+}
+
+<!DOCTYPE html>
+<html lang="@Model.Lang">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@langHelper.Translate(Model.Lang, "CDC") 2 @Model.Title</title>
+  <link rel="icon" type="image/png" href="~/images/brand.png">
+  <link rel="stylesheet" href="~/dist/@settings.BundleVersion/css/main.css">
+</head>
+<body>
+  <div class="splash" id="splash">
+    <div class="loader" data-page="loader-page">
+      <div class="loader-container">
+        <img src="~/images/brand.png">
+        <div class="loader-container-progress"></div>
+      </div>
+    </div>
+  </div>
+  @if(Model.Content != null) 
+  {
+      <partial name="@Model.Content" model="@Model.ContentData" />
+  }
+  <script>
+    window.settings = @Html.Raw(settingsJson)
+
+    window.currentLang = '@Model.Lang'
+    window.currentLangData = @Html.Raw(langData)
+
+    const splashElem = document.getElementById('splash')
+    splashElem?.classList.add('splash-open')
+  </script>   
+  <script src="~/dist/@settings.BundleVersion/js/main.js" type="module"></script>
+</body>
+</html>

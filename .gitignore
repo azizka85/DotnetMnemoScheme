@@ -1,0 +1,15 @@
+.idea
+.vs
+
+**/nuget.exe
+
+**/bin/
+**/obj/
+**/packages/
+
+**/riderModule.iml
+**/_ReSharper.Caches/
+
+**/ClientApp/node_modules
+
+**/wwwroot/dist

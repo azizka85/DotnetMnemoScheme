@@ -1,0 +1,8 @@
+﻿@model DotnetMnemoScheme.ViewModels.Layouts.MainLayoutModel
+
+<h1>Main layout - @Model.Lang</h1>
+
+@if(Model.Content != null) 
+{
+    <partial name="@Model.Content" model="@Model.ContentData" />
+}
