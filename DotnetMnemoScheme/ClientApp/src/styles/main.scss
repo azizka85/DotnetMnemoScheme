@@ -1,4 +1,8 @@
-@use './general/styles.scss' as general-styles;
+@use './general/styles' as general-styles;
 
-@use './loader/styles.scss' as loader-styles;
-@use './splash/styles.scss' as splash-styles;
+@use './button/styles' as button-styles;
+
+@use './loader/styles' as loader-styles;
+@use './splash/styles' as splash-styles;
+
+@use './left-bar/styles' as left-bar-styles; 

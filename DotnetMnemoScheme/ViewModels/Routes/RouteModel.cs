@@ -2,6 +2,6 @@
 {
     public class RouteModel
     {
-        public int Id { get; set; } = 0;
+        public int? Id { get; set; } = null;
     }
 }

@@ -3,10 +3,10 @@ const { loadContent } = require('../../helpers/general')
 /**
  * @implements {import('../view').View}
  */
- class RoutesRoutePage {
+class RoutesPage {
   /**
    * Single instance of this
-   * @type {RoutesRoutePage?}
+   * @type {RoutesPage?}
    * @protected
    */
   static page = null  
@@ -17,14 +17,14 @@ const { loadContent } = require('../../helpers/general')
   node = null
 
   /**
-   * @returns {RoutesRoutePage}
+   * @returns {RoutesPage}
    */
   static get instance() {
-    if(!RoutesRoutePage.page) {
-      RoutesRoutePage.page = new RoutesRoutePage()
+    if(!RoutesPage.page) {
+      RoutesPage.page = new RoutesPage()
     }
 
-    return RoutesRoutePage.page
+    return RoutesPage.page
   }
 
   /**
@@ -39,10 +39,10 @@ const { loadContent } = require('../../helpers/general')
    * @param {boolean} firstTime 
    * @returns {Promise<HTMLElement>}
    */
-  async init(parent, firstTime) {    
+  async init(parent, firstTime) {
     let content = await loadContent(parent, firstTime, ['main'])
 
-    this.node = content.querySelector('[data-page="routes-route-page"]')
+    this.node = content.querySelector('[data-page="routes-list-page"]')
 
     return content
   }
@@ -57,10 +57,10 @@ const { loadContent } = require('../../helpers/general')
    * @param {boolean} firstLoad 
    */
   async load(lang, page, firstLoad) {
-    console.log(lang, page, firstLoad, this.node)
+    console.log(lang, page, firstLoad)
   }
 }
 
 module.exports = {
-  RoutesRoutePage
+  RoutesPage
 }

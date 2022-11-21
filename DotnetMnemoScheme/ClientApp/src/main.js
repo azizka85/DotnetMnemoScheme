@@ -20,20 +20,20 @@ window.addEventListener('DOMContentLoaded', () => {
   /**
    * @type {import('./data/settings').Settings?}
    */
-  const settings = window.settings
+  const settings = window.mnemoScheme?.settings
 
   inject.localeRoute = `(${Object.keys(settings?.languages || {}).join('|')})`
   inject.router = new Router({ root: settings?.pageRoot || '/' })
   inject.routeNavigator = new RouteNavigator(inject.router)
 
-  if(window.currentLang && window.currentLangData) {
-    languages[window.currentLang] = window.currentLangData
+  if(window.mnemoScheme?.currentLang && window.mnemoScheme?.currentLangData) {
+    languages[window.mnemoScheme.currentLang] = window.mnemoScheme.currentLangData
   }
 
   const { localeRoute, router, routeNavigator } = inject
 
   router.addRoutes([{
-    rule: `${localeRoute}?/?(list)?`,
+    rule: `${localeRoute}?/?(:num)?`,
     async handler(page) {
       queue.stop()
     
@@ -41,22 +41,8 @@ window.addEventListener('DOMContentLoaded', () => {
         queue,
         page.match?.[0] || settings.defaultLanguage || 'ru',
         page, 
-        'routes-list', 
+        'routes', 
         ['main'],
-        firstTime
-      )
-    }
-  }, {
-    rule: `${localeRoute}/route/?(:num)?`,
-    async handler(page) {
-      queue.stop();
-
-      loadPage(
-        queue,
-        page.match?.[0] || DEFAULT_LANGUAGE,
-        page, 
-        'routes-route', 
-        ['main'], 
         firstTime
       )
     }

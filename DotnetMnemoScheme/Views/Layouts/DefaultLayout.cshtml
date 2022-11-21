@@ -31,10 +31,11 @@
       <partial name="@Model.Content" model="@Model.ContentData" />
   }
   <script>
-    window.settings = @Html.Raw(settingsJson)
+    window.mnemoScheme = {}
+    window.mnemoScheme.settings = @Html.Raw(settingsJson)
 
-    window.currentLang = '@Model.Lang'
-    window.currentLangData = @Html.Raw(langData)
+    window.mnemoScheme.currentLang = '@Model.Lang'
+    window.mnemoScheme.currentLangData = @Html.Raw(langData)
 
     const splashElem = document.getElementById('splash')
     splashElem?.classList.add('splash-open')

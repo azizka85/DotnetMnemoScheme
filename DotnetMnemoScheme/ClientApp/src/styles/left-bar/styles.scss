@@ -1,0 +1,27 @@
+﻿@use './variables';
+
+.left-bar {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: variables.$left-bar-padding;
+  
+  &-open {
+    width: variables.$left-bar-width;
+  }
+  
+  &-header {
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  &-toolbar {
+    display: flex;
+    justify-content: center;
+  }
+  
+  &-content {
+    display: flex;
+    flex-direction: column;
+  }
+}

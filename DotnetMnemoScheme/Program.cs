@@ -31,21 +31,22 @@ app.MapControllerRoute
 );
 
 app.MapControllerRoute(
-    name: "routes",
-    pattern: "{lang?}/{action=List}",
-    defaults: new
-    {
-        controller = "Routes"
-    }
-);
-
-app.MapControllerRoute(
     name: "route",
-    pattern: "{lang}/route/{id?}",
+    pattern: "{lang}/{id}",
     defaults: new
     {
         controller = "Routes",
         action = "Route"
+    }
+);
+
+app.MapControllerRoute(
+    name: "routes",
+    pattern: "{lang?}",
+    defaults: new
+    {
+        controller = "Routes",
+        action = "List"
     }
 );
 

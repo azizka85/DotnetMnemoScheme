@@ -7,7 +7,7 @@
   "dependencies": {
     "@azizka/i18n": "^1.1.0",
     "@azizka/promise-queue": "^1.2.0",
-    "@azizka/router": "^1.3.0",
+    "@azizka/router": "^1.4.0",
     "esbuild": "^0.15.14",
     "sass": "^1.56.1"
   },

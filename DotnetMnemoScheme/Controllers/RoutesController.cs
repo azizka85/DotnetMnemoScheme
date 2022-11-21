@@ -56,8 +56,12 @@ namespace DotnetMnemoScheme.Controllers
                 ajax: ajax.Count > 0 && ajax[ajax.Count - 1] == "1",
                 lang: lang,
                 title: $"- {languageHelper.Translate(lang, "Routes")}",
-                content: "~/Views/Routes/List.cshtml",
-                contentData: new ListModel {}
+                content: "~/Views/Routes/Route.cshtml",
+                contentData: new RouteModel {},
+                layouts: new List<string>
+                {
+                    "main-layout"
+                }
             );
 
             return View(

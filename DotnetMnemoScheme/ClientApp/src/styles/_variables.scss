@@ -1,6 +1,9 @@
 // declaration
 $var-prefix: 'mnemo-scheme' !default;
 
+// animation
+$transition-time: 250ms;
+
 // breakpoints
 $breakpoint-xs: 599px !default;
 $breakpoint-sm: 899px !default;

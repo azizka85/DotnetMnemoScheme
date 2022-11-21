@@ -20,8 +20,7 @@ const clientResult = await esbuild.build({
   entryPoints: {
     './main': './src/main.js',
     './views/layouts/main': './src/views/layouts/main.js',
-    './views/pages/routes-list': './src/views/pages/routes-list.js',
-    './views/pages/routes-route': './src/views/pages/routes-route.js'
+    './views/pages/routes': './src/views/pages/routes.js'
   },
   outdir: `../wwwroot/dist/${version}/js`,
   format: 'esm',

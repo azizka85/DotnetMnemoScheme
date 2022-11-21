@@ -1,15 +1,102 @@
-﻿@model DotnetMnemoScheme.ViewModels.Layouts.MainLayoutModel
+﻿@inject DotnetMnemoScheme.Models.Settings settings
+@inject DotnetMnemoScheme.Helpers.LanguageHelper languageHelper
+@model DotnetMnemoScheme.ViewModels.Layouts.MainLayoutModel
 
 @{
+    var languages = settings.Languages.ToList();
+    
     var navigation = Context.Request.Query["navigation"] == new StringValues("1");
 }
 
 <div data-layout="main-layout">
     <aside class="left-bar @(navigation ? "left-bar-open" : "")">
-        <div class="left-bar-header"></div>
-        <div class="left-bar-toolbar"></div>
-        <div class="left-bar-toolbar"></div>
-        <div class="left-bar-toolbar"></div>
+        <div class="left-bar-header">
+            <img src="~/images/logo.png">
+            <div class="btn-container">
+                @for (var i = 0; i < languages.Count; i++)
+                {
+                    var language = languages[i];
+                    
+                    <a href="@language.Key" class="btn btn-light btn-min">@language.Value.ShortLabel</a>
+
+                    if (i < languages.Count - 1)
+                    {
+                        <div class="btn-space-min"></div>
+                    }                                                          
+                }
+            </div>
+            <div class="btn-container">
+                <a href="@Model.Lang" class="btn btn-light btn-min">
+                    <svg class="btn-icon btn-icon-light btn-icon-min" viewBox="0 0 16 16">
+                        <path 
+                            fill-rule="evenodd" 
+                            d="
+                                M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 
+                                .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 
+                                0 1H3a.5.5 0 0 1-.5-.5z
+                            "
+                        />
+                    </svg>
+                </a>
+            </div>
+        </div>
+        <div class="left-bar-toolbar mt-1">
+            <a href="@Model.Lang" class="btn btn-primary btn-min">
+                @languageHelper.Translate(Model.Lang, "Almaty")
+            </a>
+            <div class="btn-space"></div>
+            <a href="@Model.Lang" class="btn btn-light btn-min">
+                @languageHelper.Translate(Model.Lang, "Karaganda")
+            </a>
+        </div>
+        <div class="left-bar-toolbar mt-1">
+            <a href="@Model.Lang" class="btn btn-primary btn-container">
+                <svg viewBox="0 0 24 24" class="btn-icon btn-icon-primary btn-icon-min">
+                    <rect width="24" height="24" fill="none"></rect>
+                    <path
+                        d="
+                            M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 
+                            11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 
+                            8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 
+                            20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 
+                            2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 
+                            4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 
+                            17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 
+                            18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 
+                            17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 
+                            5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 
+                            13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z
+                        ">
+                    </path>
+                </svg>
+                <div class="btn-space-min"></div>
+                @languageHelper.Translate(Model.Lang, "Routes")
+            </a>
+        </div>
+        <div class="left-bar-content mt-1">
+            <div class="mb-1">
+                <b class="text-primary">
+                    @languageHelper.Translate(Model.Lang, "Routes"):
+                </b>
+            </div>
+            <div class="btn-container">
+                <a href="@Model.Lang" class="btn btn-light btn-mid mb-1">1-10</a>
+                <div class="btn-space-min  mb-1"></div>
+                <a href="@Model.Lang"  class="btn btn-light btn-mid mb-1">11-20</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">21-30</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">31-40</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">41-50</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">51-60</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">61-70</a>
+                <div class="btn-space-min mb-1"></div>
+                <a class="btn btn-light btn-mid mb-1">71-80</a>
+            </div>
+        </div>
     </aside>
     <main class="main-content">
         @if (Model.Content != null)

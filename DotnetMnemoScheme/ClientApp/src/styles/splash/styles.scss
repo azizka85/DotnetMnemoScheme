@@ -16,8 +16,8 @@
   background-color: global-functions.property(background, global-variables.$background);
   opacity: 0;
   transition: 
-    z-index 250ms linear,
-    opacity 250ms linear;
+    z-index global-variables.$transition-time linear,
+    opacity global-variables.$transition-time linear;
 
   &-open {
     z-index: variables.$front-z-index;

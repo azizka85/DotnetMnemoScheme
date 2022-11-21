@@ -3,6 +3,7 @@
 @use '../theme' as global-theme;
 
 @use './variables';
+@use '../variables' as global-variables;
 
 html, body {
   height: 100vh;
@@ -10,9 +11,13 @@ html, body {
   font-family: 'Segoe UI';
 }
 
+[data-layout] {
+  display: flex;
+}
+
 [data-layout], [data-page] {
   opacity: 1;
-  transition: opacity 250ms linear;
+  transition: opacity global-variables.$transition-time linear;
 
   &.page-unmount {
     opacity: 0;
@@ -26,10 +31,18 @@ html, body {
   }
 }
 
+.text-primary {
+  color: global-functions.property(text-background-primary, global-theme.$text-background-primary);
+}
+
 .mb-1 {
   margin-bottom: variables.$margin-bottom;
 }
 
 .mt-1 {
   margin-top: variables.$margin-top;
+}
+
+.m-1 {
+  margin: 1rem;
 }
