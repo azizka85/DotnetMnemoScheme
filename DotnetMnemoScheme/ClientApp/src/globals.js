@@ -15,7 +15,7 @@ const inject = {
   /**
    * @type {string | RegExp}
    */
-  localeRoute: '(kk|ru|en)?',
+  localeRoute: '^(kk|ru|en)',
 }
 
 /**

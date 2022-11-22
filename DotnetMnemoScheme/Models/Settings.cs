@@ -20,6 +20,9 @@ namespace DotnetMnemoScheme.Models
 
         [JsonPropertyName(name: "bundleVersion")]
         public string BundleVersion { get; protected set; }
+        
+        [JsonPropertyName(name: "langRoute")]
+        public string LangRoute { get; protected set; }
 
         public Settings(IConfiguration config)
         {
@@ -59,6 +62,8 @@ namespace DotnetMnemoScheme.Models
                     } 
                 }
             };
+
+            LangRoute = $"^({string.Join("|", Languages.Select(item => item.Key))})";
         } 
         
         protected string GetBundleVersion()

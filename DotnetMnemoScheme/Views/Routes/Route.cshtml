@@ -1,3 +1,7 @@
-﻿@model DotnetMnemoScheme.ViewModels.Routes.RouteModel
+﻿@inject DotnetMnemoScheme.Helpers.LanguageHelper languageHelper
+@using Microsoft.AspNetCore.Http.Extensions
+@model DotnetMnemoScheme.ViewModels.Routes.RouteModel
 
-<h1>Route - @Model.Id</h1>
+<h1 class="text-primary">@languageHelper.Translate(@Model.Lang, "Route") - @Model.Id</h1>
+
+<p>@Context.Request.Path</p>

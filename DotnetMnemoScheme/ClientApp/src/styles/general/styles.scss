@@ -44,5 +44,9 @@ html, body {
 }
 
 .m-1 {
-  margin: 1rem;
+  margin: variables.$margin;
+}
+
+.mmr-1 {
+  margin-right: variables.$margin-min-right;
 }

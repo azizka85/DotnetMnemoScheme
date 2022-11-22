@@ -1,13 +1,26 @@
-﻿@use './variables';
+﻿@use '../functions' as global-functions;
+
+@use '../variables' as global-variables;
+@use './variables';
 
 .left-bar {
+  width: 0;
   height: 100vh;
+  box-sizing: border-box;
+  background-color: global-functions.property(background, global-variables.$background);
+  border-color: global-functions.property(border, global-variables.$border);
   display: flex;
+  flex-shrink: 0;
   flex-direction: column;
-  padding: variables.$left-bar-padding;
+  padding: 0;
+  overflow: hidden;
+  transition: width global-variables.$transition-time linear;
   
   &-open {
     width: variables.$left-bar-width;
+    border-right-width: variables.$left-bar-border-width;
+    border-right-style: solid;
+    padding: variables.$left-bar-padding;
   }
   
   &-header {

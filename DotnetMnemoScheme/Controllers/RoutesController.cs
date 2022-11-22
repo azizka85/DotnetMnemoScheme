@@ -19,45 +19,28 @@ namespace DotnetMnemoScheme.Controllers
             this.viewHelper = viewHelper;
         }
 
-        public IActionResult Route(string lang, int id)
+        public IActionResult List(string? lang, string? city, string? range, int? id)
         {
             lang = languageHelper.CheckLanguage(HttpContext, lang);
 
             var ajax = Request.Query["ajax"];
+            
+            var title = id == null ? 
+                $"- {languageHelper.Translate(lang, "Routes")}" : 
+                $"- {languageHelper.Translate(lang, "Route")} - {id}";
 
             var viewData = viewHelper.Render(
                 ajax: ajax.Count > 0 && ajax[ajax.Count - 1] == "1",
                 lang: lang,
-                title: $"- {languageHelper.Translate(lang, "Route")} - {id}",
+                title: title,
                 content: "~/Views/Routes/Route.cshtml",
                 contentData: new RouteModel
                 {
-                    Id = id
+                    Id = id,
+                    City = city,
+                    Range = range,
+                    Lang = lang
                 },
-                layouts: new List<string>
-                {
-                    "main-layout"
-                }
-            );
-
-            return View(
-                viewName: viewData.Content,
-                model: viewData.ContentData
-            );
-        }
-
-        public IActionResult List(string? lang)
-        {
-            lang = languageHelper.CheckLanguage(HttpContext, lang);
-
-            var ajax = Request.Query["ajax"];
-
-            var viewData = viewHelper.Render(
-                ajax: ajax.Count > 0 && ajax[ajax.Count - 1] == "1",
-                lang: lang,
-                title: $"- {languageHelper.Translate(lang, "Routes")}",
-                content: "~/Views/Routes/Route.cshtml",
-                contentData: new RouteModel {},
                 layouts: new List<string>
                 {
                     "main-layout"

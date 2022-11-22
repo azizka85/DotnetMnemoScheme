@@ -8,6 +8,8 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddSingleton<Settings>();
 
+builder.Services.AddSingleton<StringHelper>();
+builder.Services.AddSingleton<RequestHelper>();
 builder.Services.AddSingleton<LanguageHelper>();
 builder.Services.AddSingleton<ViewHelper>();
 
@@ -32,17 +34,7 @@ app.MapControllerRoute
 
 app.MapControllerRoute(
     name: "route",
-    pattern: "{lang}/{id}",
-    defaults: new
-    {
-        controller = "Routes",
-        action = "Route"
-    }
-);
-
-app.MapControllerRoute(
-    name: "routes",
-    pattern: "{lang?}",
+    pattern: "{lang?}/{city?}/{range?}/{id?}",
     defaults: new
     {
         controller = "Routes",

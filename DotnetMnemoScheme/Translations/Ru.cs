@@ -12,7 +12,8 @@ namespace DotnetMnemoScheme.Translations
                 { "Almaty", "Алматы" },
                 { "Karaganda", "Караганда" },
                 { "Routes", "Маршруты" },
-                { "Route", "Маршрут" }
+                { "Route", "Маршрут" },
+                { "Select an appropriate route", "Выберите необходимый маршрут" }
             };
         }
     }

@@ -22,7 +22,7 @@ window.addEventListener('DOMContentLoaded', () => {
    */
   const settings = window.mnemoScheme?.settings
 
-  inject.localeRoute = `(${Object.keys(settings?.languages || {}).join('|')})`
+  inject.localeRoute = settings?.langRoute
   inject.router = new Router({ root: settings?.pageRoot || '/' })
   inject.routeNavigator = new RouteNavigator(inject.router)
 
@@ -33,7 +33,7 @@ window.addEventListener('DOMContentLoaded', () => {
   const { localeRoute, router, routeNavigator } = inject
 
   router.addRoutes([{
-    rule: `${localeRoute}?/?(:num)?`,
+    rule: `(${localeRoute})?/?(:word)/?(:word)/?(:num)?`,
     async handler(page) {
       queue.stop()
     
