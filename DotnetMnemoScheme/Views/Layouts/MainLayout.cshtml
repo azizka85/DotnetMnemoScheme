@@ -9,7 +9,7 @@
 }
 
 <div data-layout="main-layout">
-    <aside class="left-bar @(navigation ? "left-bar-open" : "")">
+    <aside data-main-layout-panel="left-bar" class="left-bar @(navigation ? "left-bar-open" : "")">
         <div class="left-bar-header">
             <img src="~/images/logo.png">
             <div class="btn-flex">
@@ -103,8 +103,7 @@
             <div class="btn-container">
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "1-10", Context.Request.Query)"
-                    class="btn @(Model.Range == "1-10" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
+                    class="btn @(Model.Range == "1-10" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"                    
                     data-main-layout-range="1-10"
                 >
                     1-10
@@ -112,7 +111,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "11-20", Context.Request.Query)"
                     class="btn @(Model.Range == "11-20" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="11-20"
                 >
                     11-20
@@ -120,7 +118,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "21-30", Context.Request.Query)"
                     class="btn @(Model.Range == "21-30" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"      
-                    data-main-layout-button="range"
                     data-main-layout-range="21-30"
                 >
                     21-30
@@ -128,7 +125,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "31-40", Context.Request.Query)"
                     class="btn @(Model.Range == "31-40" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="31-40"
                 >
                     31-40
@@ -136,7 +132,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "41-50", Context.Request.Query)"
                     class="btn @(Model.Range == "41-50" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="41-50"
                 >
                     41-50
@@ -144,7 +139,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "51-60", Context.Request.Query)"
                     class="btn @(Model.Range == "51-60" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="51-60"
                 >
                     51-60
@@ -152,7 +146,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "61-70", Context.Request.Query)"
                     class="btn @(Model.Range == "61-70" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="61-70"
                 >
                     61-70
@@ -160,7 +153,6 @@
                 <a
                     href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "71-80", Context.Request.Query)"
                     class="btn @(Model.Range == "71-80" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
-                    data-main-layout-button="range"
                     data-main-layout-range="71-80"
                 >
                     71-80
@@ -184,7 +176,6 @@
                 <a
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "trolleybus", 1, Context.Request.Query)" 
                     class="btn @(Model.Id == 1 && Model.Type == "trolleybus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="1"
                     data-main-layout-type="trolleybus"
                 >
@@ -198,7 +189,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 1, Context.Request.Query)" 
                     class="btn @(Model.Id == 1 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="1"
                     data-main-layout-type="bus"
                 >
@@ -212,7 +202,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 2, Context.Request.Query)" 
                     class="btn @(Model.Id == 2 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="2"
                     data-main-layout-type="bus"
                 >
@@ -226,7 +215,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 3, Context.Request.Query)" 
                     class="btn @(Model.Id == 3 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="3"
                     data-main-layout-type="bus"
                 >
@@ -240,7 +228,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 4, Context.Request.Query)" 
                     class="btn @(Model.Id == 4 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="4"
                     data-main-layout-type="bus"
                 >
@@ -254,7 +241,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 5, Context.Request.Query)" 
                     class="btn @(Model.Id == 5 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="5"
                     data-main-layout-type="bus"
                 >
@@ -268,7 +254,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 6, Context.Request.Query)" 
                     class="btn @(Model.Id == 6 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="6"
                     data-main-layout-type="bus"
                 >
@@ -282,7 +267,6 @@
                 <a 
                     href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 7, Context.Request.Query)" 
                     class="btn @(Model.Id == 7 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
-                    data-main-layout-button="route"
                     data-main-layout-route="7"
                     data-main-layout-type="bus"
                 >

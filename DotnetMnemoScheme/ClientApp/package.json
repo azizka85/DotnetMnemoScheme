@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "scripts": {
     "build": "node build.mjs",
-    "dev": "node nodemon.js"
+    "dev": "nodemon build.mjs"    
   },
   "dependencies": {
     "@azizka/i18n": "^1.1.0",

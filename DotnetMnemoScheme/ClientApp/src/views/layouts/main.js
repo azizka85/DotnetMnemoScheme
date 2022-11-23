@@ -2,7 +2,7 @@ const { BaseLayout } = require('./base')
 
 const { navigateHandler, loadLinkButtonClickHandlers, mountLinkButtonClickHandlers, unmountLinkButtonClickHandlers } = require('../../helpers/dom')
 const { loadTranslation } = require('../../helpers/general')
-const { changeLangPath } = require('../../helpers/request')
+const { changeLangPath, toggleQueryParameter } = require('../../helpers/request')
 const { capitalize } = require('../../helpers/string')
 
 const { languages } = require('../../globals')
@@ -23,6 +23,12 @@ class MainLayout extends BaseLayout {
    * @protected
    */
   node = null
+
+  /**
+   * @type {HTMLElement?}
+   * @protected
+   */
+  leftBar = null
 
   /**
    * @type {NodeListOf<HTMLElement>?}
@@ -68,16 +74,19 @@ class MainLayout extends BaseLayout {
 
   /**
    * @type {HTMLElement?}
+   * @protected
    */
   routesTxt = null
 
   /**
    * @type {HTMLElement?}
+   * @protected
    */
   routeContent = null
 
   /**
    * @type {HTMLElement?}
+   * @protected
    */
   routeTxt = null
 
@@ -88,9 +97,23 @@ class MainLayout extends BaseLayout {
   linkButtonClickHandlers
 
   /**
+   * TODO: If the content contains not only a text, then need to pass to the handler also the language button elem 
    * @type {(event: MouseEvent) => void}
+   * @protected
    */
   languageButtonClickHandler
+
+  /**
+   * @type {((event: MouseEvent) => void)[]}
+   * @protected
+   */
+  rangeButtonClickHandlers
+
+  /**
+   * @type {((event: MouseEvent) => void)[]}
+   * @protected
+   */
+  routeButtonClickHandlers
 
   /**
    * @type {MainLayout}
@@ -114,6 +137,8 @@ class MainLayout extends BaseLayout {
     super()
     this.languageButtonClickHandler = event => this.changeLanguage(event)
     this.linkButtonClickHandlers = []
+    this.rangeButtonClickHandlers = []
+    this.routeButtonClickHandlers = []
   }
 
   /**
@@ -128,11 +153,13 @@ class MainLayout extends BaseLayout {
     this.node = content.querySelector('[data-layout="main-layout"]')
 
     if(this.node) {
+      this.leftBar = this.node.querySelector('[data-main-layout-panel="left-bar"]');
+
       this.languageButtons = this.node.querySelectorAll('[data-main-layout-language]')      
       this.navigationButton = this.node.querySelector('[data-main-layout-button="navigation"]')
       this.cityButtons = this.node.querySelectorAll('[data-main-layout-button="city"]')
       this.routesButton = this.node.querySelector('[data-main-layout-button="routes"]')
-      this.rangeButtons = this.node.querySelectorAll('[data-main-layout-button="range"]')      
+      this.rangeButtons = this.node.querySelectorAll('[data-main-layout-range]')      
       this.routeButtons = this.node.querySelectorAll('[data-main-layout-route]')                        
       this.linkButtons = this.node.querySelectorAll('[data-main-layout-button]')       
       
@@ -144,6 +171,8 @@ class MainLayout extends BaseLayout {
     }
 
     loadLinkButtonClickHandlers(this.linkButtons, this.linkButtonClickHandlers)
+    loadLinkButtonClickHandlers(this.rangeButtons, this.rangeButtonClickHandlers)
+    loadLinkButtonClickHandlers(this.routeButtons, this.routeButtonClickHandlers)
 
     return content
   }
@@ -156,6 +185,8 @@ class MainLayout extends BaseLayout {
     }    
 
     mountLinkButtonClickHandlers(this.linkButtons, this.linkButtonClickHandlers)
+    mountLinkButtonClickHandlers(this.rangeButtons, this.rangeButtonClickHandlers)
+    mountLinkButtonClickHandlers(this.routeButtons, this.routeButtonClickHandlers)
 
     await this.content?.mount?.()
   }
@@ -168,6 +199,8 @@ class MainLayout extends BaseLayout {
     }
 
     unmountLinkButtonClickHandlers(this.linkButtons, this.linkButtonClickHandlers)
+    unmountLinkButtonClickHandlers(this.rangeButtons, this.rangeButtonClickHandlers)
+    unmountLinkButtonClickHandlers(this.routeButtons, this.routeButtonClickHandlers)    
 
     await this.content?.unmount?.()
   }
@@ -184,6 +217,8 @@ class MainLayout extends BaseLayout {
     const settings = window.mnemoScheme?.settings
     const pageRoot = settings?.pageRoot ?? '/'
 
+    const navigation = page.query.navigation === '1'
+
     const city = page.match?.[1] || settings.defaultCity || 'almaty'
 
     const rangeBegin = page.match?.[2]
@@ -197,6 +232,14 @@ class MainLayout extends BaseLayout {
     const translator = languages[lang]
 
     if(!firstLoad) {
+      if(this.leftBar) {
+        if(navigation) {
+          this.leftBar.classList.add('left-bar-open')
+        } else {
+          this.leftBar.classList.remove('left-bar-open')
+        }
+      }
+
       if(this.languageButtons) {
         for(const languageButton of this.languageButtons) {
           const itemLang = languageButton.getAttribute('data-main-layout-language')
@@ -215,7 +258,14 @@ class MainLayout extends BaseLayout {
             languageButton.classList.add('btn-light')
           }
         }
-      }      
+      }    
+      
+      if(this.navigationButton) {
+        this.navigationButton.setAttribute(
+          'href',
+          `${pageRoot + page.fragment}?${toggleQueryParameter(page.query, 'navigation')}`
+        )
+      }
 
       if(this.cityButtons) {
         for(const cityButton of this.cityButtons) {
@@ -291,7 +341,6 @@ class MainLayout extends BaseLayout {
            */
           const icon = icons.length > 0 ? icons[0] : null
 
-
           const itemType = routeButton.getAttribute('data-main-layout-type')
           const itemRoute = routeButton.getAttribute('data-main-layout-route')
   
@@ -304,17 +353,21 @@ class MainLayout extends BaseLayout {
             routeButton.classList.remove('btn-light')
             routeButton.classList.add('btn-primary')
 
-            icon.classList.remove('btn-icon-light')
-            icon.classList.add('btn-icon-primary')
+            if(icon) {
+              icon.classList.remove('btn-icon-light')
+              icon.classList.add('btn-icon-primary')
+            }
           } else {
             routeButton.classList.remove('btn-primary')
             routeButton.classList.add('btn-light')
 
-            icon.classList.remove('btn-icon-primary')
-            icon.classList.add('btn-icon-light')
+            if(icon) {
+              icon.classList.remove('btn-icon-primary')
+              icon.classList.add('btn-icon-light')
+            }
           }
         }
-      }
+      }      
     }
   }
 
