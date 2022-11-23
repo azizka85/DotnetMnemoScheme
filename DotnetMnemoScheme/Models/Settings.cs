@@ -15,6 +15,9 @@ namespace DotnetMnemoScheme.Models
         [JsonPropertyName(name: "defaultLanguage")]
         public string DefaultLanguage { get; protected set; }
 
+        [JsonPropertyName(name: "defaultCity")]
+        public string DefaultCity { get; protected set; }
+
         [JsonPropertyName(name: "languages")]
         public Dictionary<string, LanguageInfo> Languages { get; protected set; }
 
@@ -29,7 +32,8 @@ namespace DotnetMnemoScheme.Models
             // TODO: Need to change
             PageRoot = "/";
             BundleVersion = GetBundleVersion();
-            DefaultLanguage = config["DefaultLanguage"] ?? "kk";            
+            DefaultLanguage = config["DefaultLanguage"] ?? "kk";
+            DefaultCity = config["DefaultCity"] ?? "almaty";
 
             Languages = new Dictionary<string, LanguageInfo>
             {

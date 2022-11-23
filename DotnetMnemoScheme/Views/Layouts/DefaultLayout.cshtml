@@ -1,10 +1,33 @@
 ﻿@inject DotnetMnemoScheme.Models.Settings settings
 @inject DotnetMnemoScheme.Helpers.LanguageHelper langHelper
+@inject DotnetMnemoScheme.Helpers.StringHelper stringHelper
 @model DotnetMnemoScheme.ViewModels.Layouts.DefaultLayoutModel
 
 @{
-    var settingsJson = JsonSerializer.Serialize(settings);
-    var langData = JsonSerializer.Serialize(settings.Languages[Model.Lang].Translator.Data);
+  var settingsJson = JsonSerializer.Serialize(settings);
+    
+  var langData = JsonSerializer.Serialize
+  (
+    JsonSerializer.Serialize<AzizkaDotNetI18n.Options.DataOptions?>
+    (
+      value: langHelper.GetDataOptions
+      (
+        Context,
+        Model.Lang
+      ),
+      options: new JsonSerializerOptions
+      {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+      }
+    )
+  );
+
+  var title = $"{langHelper.Translate(Model.Lang, "CDC")} 2 - {langHelper.Translate(Model.Lang, "Routes")} - {langHelper.Translate(Model.Lang, stringHelper.Capitalize(Model.City))}";
+
+  if (Model.Id != null && Model.Type != null)
+  {
+    title = $"{langHelper.Translate(Model.Lang, "CDC")} 2 - {langHelper.Translate(Model.Lang, "Route")} - {langHelper.Translate(Model.Lang, stringHelper.Capitalize(Model.City))} - {langHelper.Translate(Model.Lang, stringHelper.Capitalize(Model.Type))} - {Model.Id}";
+  }
 }
 
 <!DOCTYPE html>
@@ -13,33 +36,33 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>@langHelper.Translate(Model.Lang, "CDC") 2 @Model.Title</title>
+  <title>@(Model.Title ?? title)</title>
   <link rel="icon" type="image/png" href="~/favicon.ico">
   <link rel="stylesheet" href="~/dist/@settings.BundleVersion/css/main.css">
 </head>
 <body>
-  <div class="splash" id="splash">
-    <div class="loader" data-page="loader-page">
-      <div class="loader-container">
-        <img src="~/images/logo.png">
-        <div class="loader-container-progress mt-1"></div>
-      </div>
+<div class="splash" id="splash">
+  <div class="loader" data-page="loader-page">
+    <div class="loader-container">
+      <img src="~/images/logo.png">
+      <div class="loader-container-progress mt-1"></div>
     </div>
   </div>
-  @if(Model.Content != null) 
-  {
-      <partial name="@Model.Content" model="@Model.ContentData" />
-  }
-  <script>
-    window.mnemoScheme = {}
-    window.mnemoScheme.settings = @Html.Raw(settingsJson)
+</div>
+@if (Model.Content != null)
+{
+  <partial name="@Model.Content" model="@Model.ContentData"/>
+}
+<script>
+  window.mnemoScheme = {}
+  window.mnemoScheme.settings = @Html.Raw(settingsJson)
 
-    window.mnemoScheme.currentLang = '@Model.Lang'
-    window.mnemoScheme.currentLangData = @Html.Raw(langData)
+  window.mnemoScheme.currentLang = '@Model.Lang'
+  window.mnemoScheme.currentLangData = JSON.parse(@Html.Raw(langData))
 
-    const splashElem = document.getElementById('splash')
-    splashElem?.classList.add('splash-open')
-  </script>   
-  <script src="~/dist/@settings.BundleVersion/js/main.js" type="module"></script>
+  const splashElem = document.getElementById('splash')
+  splashElem?.classList.add('splash-open')
+</script>
+<script src="~/dist/@settings.BundleVersion/js/main.js" type="module"></script>
 </body>
 </html>

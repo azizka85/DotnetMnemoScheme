@@ -1,4 +1,4 @@
-import { Page } from '@azizka/router'
+import { Page } from '@azizka/router/src/data/page'
 
 import { RouteOptions } from '../data/route-options'
 import { RouteState } from '../data/route-state'
@@ -10,35 +10,35 @@ export interface Listener {
 }
 
 export interface Component extends Listener {
-  init(view: View, firstTime: boolean): Promise<void>;
+  init(view: View, firstTime: boolean): Promise<void>
 
-  mount?(): Promise<void>;
-  unmount?(): Promise<void>;
+  mount?(): Promise<void>
+  unmount?(): Promise<void>
 
   load?(
     lang: string, 
     page: Page<RouteOptions, RouteState>, 
     firstLoad: boolean
-  ): Promise<void>;
+  ): Promise<void>
 }
 
 export interface View extends Listener {
-  get elem(): HTMLElement | null;  
+  get elem(): HTMLElement | null  
 
-  init(parent: HTMLElement | null, firstTime: boolean): Promise<HTMLElement>;
+  init(parent: HTMLElement | null, firstTime: boolean): Promise<HTMLElement>
 
-  replaceSelf?(content: View): Promise<void>;
+  replaceSelf?(content: View): Promise<void>
 
-  mount?(): Promise<void>;
-  unmount?(): Promise<void>;
+  mount?(): Promise<void>
+  unmount?(): Promise<void>
 
   load?(
     lang: string, 
     page: Page<RouteOptions, RouteState>, 
     firstLoad: boolean
-  ): Promise<void>;  
+  ): Promise<void>  
 }
 
 export interface Layout extends Listener {
-  replaceContent(content: View): Promise<void>;
+  replaceContent(content: View): Promise<void>
 }

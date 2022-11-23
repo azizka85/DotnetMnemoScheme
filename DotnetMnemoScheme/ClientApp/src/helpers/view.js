@@ -54,7 +54,7 @@ async function initLayouts(layoutNames, parent, firstTime) {
 
   for(const layoutName of layoutNames) {
     if(!(layoutName in layouts)) {
-      const module = (await import(`./views/layouts/${layoutName}.js?time=${Date.now()}`)).default
+      const module = (await import(`./views/layouts/${layoutName}.js`)).default
 
       parent = await module[toCamel(`${layoutName}-layout`)]?.instance?.init?.(parent, firstTime)
 
@@ -72,21 +72,24 @@ async function initLayouts(layoutNames, parent, firstTime) {
  * @param {import('../data/client-page').ClientPage} page 
  * @param {string[]} layoutNames 
  * @param {{[key: string]: boolean}} firstLoad 
+ * @param {boolean} firstTime
  * @returns {Promise<import('../views/layouts/base').BaseLayout>}
  */
-async function loadLayouts(lang, page, layoutNames, firstLoad) {
+async function loadLayouts(lang, page, layoutNames, firstLoad, firstTime) {
   const reverseLayoutNames = [...layoutNames].reverse()
 
   let parentLayout = DefaultLayout.instance
+
+  parentLayout.load(lang, page, firstTime)
 
   for(const layoutName of reverseLayoutNames) {
     if(parentLayout['content'] !== layouts[layoutName]) {
       await parentLayout.replaceContent(layouts[layoutName])
     }
 
-    await layouts[layoutName].load?.(lang, page, firstLoad[layoutName] ?? false);
+    await layouts[layoutName].load?.(lang, page, firstLoad[layoutName] ?? false)
 
-    parentLayout = layouts[layoutName];
+    parentLayout = layouts[layoutName]
   } 
   
   return parentLayout
@@ -110,7 +113,7 @@ function loadPage(queue, lang, page, name, layoutNames, firstTime) {
 
   queue.addTask(async () => {
     if(!firstTime && (!(lang in languages) || !(name in views))) {
-      const layout = getExistingLayout(layoutNames);
+      const layout = getExistingLayout(layoutNames)
   
       if(layout['content'] !== LoaderPage.instance) {
         await layout.replaceContent(LoaderPage.instance)
@@ -129,12 +132,12 @@ function loadPage(queue, lang, page, name, layoutNames, firstTime) {
 
         data = {
           status: TaskStatus.completed          
-        };
+        }
       } catch(err) {
         data = {
           status: TaskStatus.error,
           data: err
-        };
+        }
       }
     }
 
@@ -144,7 +147,7 @@ function loadPage(queue, lang, page, name, layoutNames, firstTime) {
   queue.addTask(async (data) => {
     if((!data || data.status === TaskStatus.completed) && !(name in views)) {       
       try {
-        const module = (await import(`./views/pages/${name}.js?time=${Date.now()}`)).default
+        const module = (await import(`./views/pages/${name}.js`)).default
   
         parent = await module[toCamel(`${name}-page`)]?.instance?.init?.(parent, firstTime)
     
@@ -192,30 +195,28 @@ function loadPage(queue, lang, page, name, layoutNames, firstTime) {
         /**
          * @type {{[key: string]: boolean}}
          */
-        const firstLoad = data.data
-
-        document.documentElement.lang = lang
+        const firstLoad = data.data        
         
-        const layout = await loadLayouts(lang, page, layoutNames, firstLoad)    
+        const layout = await loadLayouts(lang, page, layoutNames, firstLoad, firstTime)    
     
         if(layout['content'] !== views[name]) {
-          await layout.replaceContent(views[name]);
+          await layout.replaceContent(views[name])
         }
     
-        await views[name].load?.(lang, page, pageFirstLoad);
+        await views[name].load?.(lang, page, pageFirstLoad)
 
         data = {
           status: TaskStatus.completed
-        };
+        }
       } catch(err) {
         data = {
           status: TaskStatus.error,
           data: err
-        };
+        }
       }
     }
 
-    return data;
+    return data
   })
 
   queue.addTask(async (data) => {

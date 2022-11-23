@@ -1,5 +1,6 @@
 const { Router, RouteNavigator } = require('@azizka/router')
 const { PromiseQueue } = require('@azizka/promise-queue')
+const { Translator } = require('@azizka/i18n')
 
 const { LoaderPage } = require('./views/pages/loader')
 
@@ -27,13 +28,13 @@ window.addEventListener('DOMContentLoaded', () => {
   inject.routeNavigator = new RouteNavigator(inject.router)
 
   if(window.mnemoScheme?.currentLang && window.mnemoScheme?.currentLangData) {
-    languages[window.mnemoScheme.currentLang] = window.mnemoScheme.currentLangData
+    languages[window.mnemoScheme.currentLang] = Translator.create(window.mnemoScheme.currentLangData)
   }
 
   const { localeRoute, router, routeNavigator } = inject
 
   router.addRoutes([{
-    rule: `(${localeRoute})?/?(:word)/?(:word)/?(:num)?`,
+    rule: `${localeRoute}?/?(:word)?/?(:num)?-?(:num)?/?(:word)?/?(:num)?`,
     async handler(page) {
       queue.stop()
     
@@ -48,13 +49,13 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }])
 
-  routeNavigator.addUriListener();
+  routeNavigator.addUriListener()
 
   router
     .processUrl(routeNavigator.fragment, routeNavigator.query)
     .catch(
       reason => console.error(reason)      
     )
-    .finally(() => firstTime = false);
+    .finally(() => firstTime = false)
 })
 

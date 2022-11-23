@@ -34,7 +34,7 @@ app.MapControllerRoute
 
 app.MapControllerRoute(
     name: "route",
-    pattern: "{lang?}/{city?}/{range?}/{id?}",
+    pattern: "{lang?}/{city?}/{range?}/{type?}/{id?}",
     defaults: new
     {
         controller = "Routes",

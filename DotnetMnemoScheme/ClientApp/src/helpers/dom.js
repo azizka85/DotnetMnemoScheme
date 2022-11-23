@@ -2,14 +2,16 @@ const { inject } = require('../globals')
 
 /**
  * @param {Event} event 
- * @param {HTMLElement} elem 
+ * @param {HTMLElement?} elem
  */
 async function navigateHandler(event, elem) {
-  event.preventDefault();
+  event.preventDefault()
 
   const { routeNavigator } = inject
 
-  const path = elem.getAttribute?.('href')
+  elem = elem ?? event.target
+
+  const path = elem?.getAttribute?.('href')
 
   if(path) {
     await routeNavigator.navigateTo(path)
@@ -38,8 +40,47 @@ async function unmount(elem) {
   }
 }
 
+/**
+ * @param {NodeListOf<HTMLElement>} linkButtons 
+ * @param {((event: MouseEvent) => void)[]} linkButtonClickHandlers 
+ */
+function loadLinkButtonClickHandlers(linkButtons, linkButtonClickHandlers) {
+  if(linkButtons) {
+    for(const linkButton of linkButtons) {
+      linkButtonClickHandlers.push((event) => navigateHandler(event, linkButton))
+    }
+  }
+}
+
+/**
+ * @param {NodeListOf<HTMLElement>} linkButtons 
+ * @param {((event: MouseEvent) => void)[]} linkButtonClickHandlers 
+ */
+function mountLinkButtonClickHandlers(linkButtons, linkButtonClickHandlers) {
+  if(linkButtons) {
+    for(let i = 0; i < linkButtons.length; i++) {
+      linkButtons[i].addEventListener('click', linkButtonClickHandlers[i])
+    }
+  }
+}
+
+/**
+ * @param {NodeListOf<HTMLElement>} linkButtons 
+ * @param {((event: MouseEvent) => void)[]} linkButtonClickHandlers 
+ */
+function unmountLinkButtonClickHandlers(linkButtons, linkButtonClickHandlers) {
+  if(linkButtons) {
+    for(let i = 0; i < linkButtons.length; i++) {
+      linkButtons[i].removeEventListener('click', linkButtonClickHandlers[i])
+    }
+  }
+}
+
 module.exports = {
   navigateHandler,
   mount,
-  unmount
+  unmount,
+  loadLinkButtonClickHandlers,
+  mountLinkButtonClickHandlers,
+  unmountLinkButtonClickHandlers
 }

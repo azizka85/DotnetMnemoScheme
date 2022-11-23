@@ -5,7 +5,6 @@
 
 @{
     var languages = settings.Languages.ToList();
-    
     var navigation = Context.Request.Query["navigation"] == new StringValues("1");
 }
 
@@ -17,22 +16,20 @@
                 @for (var i = 0; i < languages.Count; i++)
                 {
                     var language = languages[i];
-                    
                     <a
                         href="~/@requestHelper.ChangeLangPath(Context, language.Key)"
                         class="btn @(Model.Lang == language.Key ? "btn-primary" : "btn-light") btn-min"
+                        data-main-layout-language="@language.Key"
                     >
                         @language.Value.ShortLabel
                     </a>
-
-                    if (i < languages.Count - 1)
-                    {
-                        <div class="btn-space-min"></div>
-                    }                                                          
+                    <div class="btn-space-min"></div>                                                       
                 }
-            </div>
-            <div class="btn-flex">
-                <a href="~/@Model.Lang" class="btn btn-light btn-min">
+                <a 
+                    href="@requestHelper.ToggleQueryParameter(Context, "navigation")" 
+                    class="btn btn-light btn-min"
+                    data-main-layout-button="navigation"
+                >
                     <svg class="btn-icon btn-icon-light btn-icon-min" viewBox="0 0 16 16">
                         <path 
                             fill-rule="evenodd" 
@@ -47,16 +44,30 @@
             </div>
         </div>
         <div class="left-bar-toolbar mt-1">
-            <a href="~/@Model.Lang" class="btn btn-primary btn-min">
+            <a 
+                href="~/@requestHelper.SetCityPath(Model.Lang, "almaty", Context.Request.Query)" 
+                class="btn @(Model.City == "almaty" ? "btn-primary" : "btn-light") btn-min"
+                data-main-layout-button="city"
+                data-main-layout-city="almaty"
+            >
                 @languageHelper.Translate(Model.Lang, "Almaty")
             </a>
             <div class="btn-space"></div>
-            <a href="~/@Model.Lang" class="btn btn-light btn-min">
+            <a 
+                href="~/@requestHelper.SetCityPath(Model.Lang, "karaganda", Context.Request.Query)" 
+                class="btn @(Model.City == "karaganda" ? "btn-primary" : "btn-light") btn-min"
+                data-main-layout-button="city"
+                data-main-layout-city="karaganda"
+            >
                 @languageHelper.Translate(Model.Lang, "Karaganda")
             </a>
         </div>
         <div class="left-bar-toolbar mt-1">
-            <a href="~/@Model.Lang" class="btn btn-primary btn-container">
+            <a 
+                href="~/@Model.Lang" 
+                class="btn btn-primary btn-container"
+                data-main-layout-button="routes"
+            >
                 <svg viewBox="0 0 24 24" class="btn-icon btn-icon-primary">
                     <rect width="24" height="24" fill="none"></rect>
                     <path
@@ -82,85 +93,200 @@
         <div class="left-bar-content mt-1">
             <div class="mb-1">
                 <b class="text-primary">
-                    @languageHelper.Translate(Model.Lang, "Routes"):
+                    <span
+                        data-main-layout-text="routes"
+                    >
+                        @languageHelper.Translate(Model.Lang, "Routes")
+                    </span>:
                 </b>
             </div>
             <div class="btn-container">
-                <a href="~/@Model.Lang" class="btn btn-primary btn-mid mb-1 mmr-1">1-10</a>
-                <a href="~/@Model.Lang"  class="btn btn-light btn-mid mb-1 mmr-1">11-20</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">21-30</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">31-40</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">41-50</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">51-60</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">61-70</a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1">71-80</a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "1-10", Context.Request.Query)"
+                    class="btn @(Model.Range == "1-10" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="1-10"
+                >
+                    1-10
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "11-20", Context.Request.Query)"
+                    class="btn @(Model.Range == "11-20" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="11-20"
+                >
+                    11-20
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "21-30", Context.Request.Query)"
+                    class="btn @(Model.Range == "21-30" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"      
+                    data-main-layout-button="range"
+                    data-main-layout-range="21-30"
+                >
+                    21-30
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "31-40", Context.Request.Query)"
+                    class="btn @(Model.Range == "31-40" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="31-40"
+                >
+                    31-40
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "41-50", Context.Request.Query)"
+                    class="btn @(Model.Range == "41-50" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="41-50"
+                >
+                    41-50
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "51-60", Context.Request.Query)"
+                    class="btn @(Model.Range == "51-60" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="51-60"
+                >
+                    51-60
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "61-70", Context.Request.Query)"
+                    class="btn @(Model.Range == "61-70" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="61-70"
+                >
+                    61-70
+                </a>
+                <a
+                    href="~/@requestHelper.SetRoutesRangePath(Model.Lang, Model.City, "71-80", Context.Request.Query)"
+                    class="btn @(Model.Range == "71-80" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1"
+                    data-main-layout-button="range"
+                    data-main-layout-range="71-80"
+                >
+                    71-80
+                </a>
             </div>
         </div>
-        <div class="left-bar-content mt-1">
+        <div
+            data-main-layout-content="route"
+            class="left-bar-content @(Model.Range == null ? "left-bar-content-hide" : "") mt-1"
+        >
             <div class="mb-1">
                 <b class="text-primary">
-                    @languageHelper.Translate(Model.Lang, "Select an appropriate route"):
+                    <span
+                        data-main-layout-text="route"
+                    >
+                        @languageHelper.Translate(Model.Lang, "Select an appropriate route")
+                    </span>:
                 </b>
             </div>
             <div class="btn-container">
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 25" class="btn-icon btn-icon-light btn-icon-min">
-                    	<rect width="24" height="25" fill="none"></rect>
-                    	<path d="M18.259 5.229H15.094V0.86L13.655 0.86V3.295 5.301H10.345V0.86H8.906V2.077 5.229H5.741C4.59 5.229 3.655 6.16 3.655 7.307V10.172H2.432C2.216 10.172 2 10.387 2 10.602V13.825C2 14.04 2.216 14.255 2.432 14.255H3.655V21.275C3.655 22.278 4.374 23.138 5.309 23.281V24.427C5.309 24.714 5.525 25 5.885 25H7.827C8.115 25 8.403 24.785 8.403 24.427V23.352H15.597V24.427C15.597 24.714 15.813 25 16.173 25H18.115C18.403 25 18.691 24.785 18.691 24.427V23.281C19.626 23.066 20.345 22.278 20.345 21.275V14.255H21.568C21.784 14.255 22 14.04 22 13.825V10.602C22 10.387 21.784 10.172 21.568 10.172H20.345V7.307C20.345 6.16 19.41 5.229 18.259 5.229ZM6.676 7.092H17.468C17.54 7.092 17.612 7.163 17.612 7.235V8.238C17.612 8.309 17.54 8.381 17.468 8.381H6.676C6.604 8.381 6.532 8.309 6.532 8.238V7.235C6.532 7.163 6.604 7.092 6.676 7.092ZM7.54 20.917C6.82 20.917 6.317 20.344 6.317 19.699 6.317 18.983 6.892 18.481 7.54 18.481 8.259 18.481 8.763 19.054 8.763 19.699 8.763 20.416 8.187 20.917 7.54 20.917ZM16.604 20.917C15.885 20.917 15.381 20.344 15.381 19.699 15.381 18.983 15.957 18.481 16.604 18.481 17.324 18.481 17.827 19.054 17.827 19.699 17.827 20.416 17.252 20.917 16.604 20.917ZM5.885 16.762C5.669 16.762 5.453 16.547 5.453 16.332 5.453 14.398 5.453 12.536 5.453 10.602 5.453 10.387 5.669 10.172 5.885 10.172 9.986 10.172 14.086 10.172 18.259 10.172 18.475 10.172 18.691 10.387 18.691 10.602 18.691 12.536 18.691 14.398 18.691 16.332 18.691 16.547 18.475 16.762 18.259 16.762 14.158 16.762 10.058 16.762 5.885 16.762Z"></path>
+                <a
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "trolleybus", 1, Context.Request.Query)" 
+                    class="btn @(Model.Id == 1 && Model.Type == "trolleybus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="1"
+                    data-main-layout-type="trolleybus"
+                >
+                    <svg viewBox="0 0 24 25" class="btn-icon @(Model.Id == 1 && Model.Type == "trolleybus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
+                        <rect width="24" height="25" fill="none"></rect>
+                        <path d="M18.259 5.229H15.094V0.86L13.655 0.86V3.295 5.301H10.345V0.86H8.906V2.077 5.229H5.741C4.59 5.229 3.655 6.16 3.655 7.307V10.172H2.432C2.216 10.172 2 10.387 2 10.602V13.825C2 14.04 2.216 14.255 2.432 14.255H3.655V21.275C3.655 22.278 4.374 23.138 5.309 23.281V24.427C5.309 24.714 5.525 25 5.885 25H7.827C8.115 25 8.403 24.785 8.403 24.427V23.352H15.597V24.427C15.597 24.714 15.813 25 16.173 25H18.115C18.403 25 18.691 24.785 18.691 24.427V23.281C19.626 23.066 20.345 22.278 20.345 21.275V14.255H21.568C21.784 14.255 22 14.04 22 13.825V10.602C22 10.387 21.784 10.172 21.568 10.172H20.345V7.307C20.345 6.16 19.41 5.229 18.259 5.229ZM6.676 7.092H17.468C17.54 7.092 17.612 7.163 17.612 7.235V8.238C17.612 8.309 17.54 8.381 17.468 8.381H6.676C6.604 8.381 6.532 8.309 6.532 8.238V7.235C6.532 7.163 6.604 7.092 6.676 7.092ZM7.54 20.917C6.82 20.917 6.317 20.344 6.317 19.699 6.317 18.983 6.892 18.481 7.54 18.481 8.259 18.481 8.763 19.054 8.763 19.699 8.763 20.416 8.187 20.917 7.54 20.917ZM16.604 20.917C15.885 20.917 15.381 20.344 15.381 19.699 15.381 18.983 15.957 18.481 16.604 18.481 17.324 18.481 17.827 19.054 17.827 19.699 17.827 20.416 17.252 20.917 16.604 20.917ZM5.885 16.762C5.669 16.762 5.453 16.547 5.453 16.332 5.453 14.398 5.453 12.536 5.453 10.602 5.453 10.387 5.669 10.172 5.885 10.172 9.986 10.172 14.086 10.172 18.259 10.172 18.475 10.172 18.691 10.387 18.691 10.602 18.691 12.536 18.691 14.398 18.691 16.332 18.691 16.547 18.475 16.762 18.259 16.762 14.158 16.762 10.058 16.762 5.885 16.762Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     1
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 1, Context.Request.Query)" 
+                    class="btn @(Model.Id == 1 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="1"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 1 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     1
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-primary btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-primary btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 2, Context.Request.Query)" 
+                    class="btn @(Model.Id == 2 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="2"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 2 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     2
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 3, Context.Request.Query)" 
+                    class="btn @(Model.Id == 3 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="3"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 3 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     3
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 4, Context.Request.Query)" 
+                    class="btn @(Model.Id == 4 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="4"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 4 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     4
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 5, Context.Request.Query)" 
+                    class="btn @(Model.Id == 5 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="5"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 5 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     5
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 6, Context.Request.Query)" 
+                    class="btn @(Model.Id == 6 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="6"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 6 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>
                     <div class="btn-space-min"></div>
                     6
                 </a>
-                <a href="~/@Model.Lang" class="btn btn-light btn-mid mb-1 mmr-1 btn-container">
-                    <svg viewBox="0 0 24 24" class="btn-icon btn-icon-light btn-icon-min">
+                <a 
+                    href="~/@requestHelper.SetRoutePath(Model.Lang, Model.City, Model.Range, "bus", 7, Context.Request.Query)" 
+                    class="btn @(Model.Id == 7 && Model.Type == "bus" ? "btn-primary" : "btn-light") btn-mid mb-1 mmr-1 btn-container"
+                    data-main-layout-button="route"
+                    data-main-layout-route="7"
+                    data-main-layout-type="bus"
+                >
+                    <svg viewBox="0 0 24 24" class="btn-icon @(Model.Id == 7 && Model.Type == "bus" ? "btn-icon-primary" : "btn-icon-light") btn-icon-min">
                         <rect width="24" height="24" fill="none"></rect>
                         <path d="M18.291 1H5.759C4.607 1 3.654 2.042 3.654 3.304V6.486H2.451C2.201 6.486 2 6.706 2 6.98V10.546C2 10.82 2.201 11.04 2.451 11.04H3.654V18.885C3.654 19.983 4.356 20.915 5.308 21.135V22.397C5.308 22.726 5.559 23 5.86 23H7.815C8.115 23 8.366 22.726 8.366 22.397V21.19H15.634V22.397C15.634 22.726 15.885 23 16.186 23H18.14C18.441 23 18.692 22.726 18.692 22.397V21.135C19.644 20.915 20.346 19.983 20.346 18.885V11.04H21.549C21.8 11.04 22 10.82 22 10.546V6.98C22 6.706 21.8 6.486 21.549 6.486H20.346V3.304C20.346 2.042 19.394 1 18.241 1H18.291ZM6.561 3.085H17.489C17.539 3.085 17.589 3.14 17.589 3.195V4.347C17.589 4.402 17.539 4.456 17.489 4.456H6.561C6.511 4.456 6.461 4.402 6.461 4.347V3.195C6.461 3.14 6.511 3.085 6.561 3.085ZM7.414 18.392C6.712 18.392 6.16 17.788 6.16 17.02 6.16 16.252 6.712 15.648 7.414 15.648 8.115 15.648 8.667 16.252 8.667 17.02 8.667 17.788 8.115 18.392 7.414 18.392ZM16.587 18.392C15.885 18.392 15.333 17.788 15.333 17.02 15.333 16.252 15.885 15.648 16.587 15.648 17.288 15.648 17.84 16.252 17.84 17.02 17.84 17.788 17.288 18.392 16.587 18.392ZM5.759 13.838C5.509 13.838 5.308 13.619 5.308 13.344 5.308 11.205 5.308 9.12 5.308 6.98 5.308 6.706 5.509 6.486 5.759 6.486 9.92 6.486 14.08 6.486 18.241 6.486 18.491 6.486 18.692 6.706 18.692 6.98 18.692 9.12 18.692 11.205 18.692 13.344 18.692 13.619 18.491 13.838 18.241 13.838 14.08 13.838 9.92 13.838 5.759 13.838Z"></path>
                     </svg>

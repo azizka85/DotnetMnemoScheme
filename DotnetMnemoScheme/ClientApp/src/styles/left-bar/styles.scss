@@ -4,8 +4,10 @@
 @use './variables';
 
 .left-bar {
-  width: 0;
+  transform: translate(-#{variables.$left-bar-width}, 0);
+  width: variables.$left-bar-width;
   height: 100vh;
+  overflow: hidden;
   box-sizing: border-box;
   background-color: global-functions.property(background, global-variables.$background);
   border-color: global-functions.property(border, global-variables.$border);
@@ -13,14 +15,22 @@
   flex-shrink: 0;
   flex-direction: column;
   padding: 0;
-  overflow: hidden;
-  transition: width global-variables.$transition-time linear;
+  transition: transform global-variables.$transition-time ease-in-out;
+  
+  & + .main-content {
+    transform: translate(-#{variables.$left-bar-width}, 0);
+    transition: transform global-variables.$transition-time ease-in-out;
+  }
   
   &-open {
-    width: variables.$left-bar-width;
+    transform: translate(0, 0);
     border-right-width: variables.$left-bar-border-width;
     border-right-style: solid;
     padding: variables.$left-bar-padding;
+    
+    & + .main-content {
+      transform: translate(0, 0);
+    }
   }
   
   &-header {
@@ -36,5 +46,9 @@
   &-content {
     display: flex;
     flex-direction: column;
+    
+    &-hide {
+      display: none;
+    }
   }
 }

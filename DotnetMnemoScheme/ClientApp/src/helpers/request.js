@@ -62,7 +62,7 @@ const { inject } = require('../globals')
   const index = url.search(localeRoute)
 
   if(index >= 0) {
-    return url.replace(localeRoute, lang)
+    return url.replace(new RegExp(localeRoute), lang)
   }
 
   return `${lang}/${url}`

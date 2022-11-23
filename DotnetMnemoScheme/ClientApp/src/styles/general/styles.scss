@@ -25,6 +25,8 @@ html, body {
 }
 
 .main-content {
+  padding: variables.$padding;
+  
   *::selection {
     color: global-functions.property(text-primary, global-theme.$text-primary);
     background-color: global-functions.property(text-background-primary, global-theme.$text-background-primary);

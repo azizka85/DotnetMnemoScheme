@@ -1,6 +1,6 @@
 /**
  * Capitalize input
- * @param {string} input 
+ * @param {string?} input 
  * @returns {string}
  */
  function capitalize(input) {

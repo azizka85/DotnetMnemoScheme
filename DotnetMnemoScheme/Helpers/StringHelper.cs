@@ -6,12 +6,18 @@ public class StringHelper
 {
     public string Capitalize(string input)
     {
-        if (!string.IsNullOrWhiteSpace(input))
+        if (string.IsNullOrWhiteSpace(input))
         {
             return input;
         }
-
-        return input[0].ToString().ToUpper() + input.Substring(1).ToLower();
+        else if (input.Length == 1)
+        {
+            return input[0].ToString().ToUpper();
+        }
+        else
+        {
+            return input[0].ToString().ToUpper() + input.Substring(1).ToLower();   
+        }
     }
     
     public string ToCamel(string input)

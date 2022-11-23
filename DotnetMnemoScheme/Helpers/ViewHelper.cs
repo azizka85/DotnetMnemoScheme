@@ -14,8 +14,19 @@ namespace DotnetMnemoScheme.Helpers
             };
         }
 
-        public LayoutHandlerOutput Render(bool ajax, string lang, string title, string content, object contentData, List<string>? layouts = null)
-        {
+        public LayoutHandlerOutput Render
+        (
+            bool ajax,
+            int? id,
+            string city,
+            string? range,
+            string? type,
+            string lang, 
+            string? title, 
+            string content, 
+            object contentData, 
+            List<string>? layouts = null
+        ) {
             if(layouts?.Count > 0)
             {
                 var layoutHandlers = GetLayoutHandlers(layouts);
@@ -27,6 +38,10 @@ namespace DotnetMnemoScheme.Helpers
                     var result = handler(
                         new LayoutHandlerInput
                         {
+                            Id = id,
+                            City = city,
+                            Range = range,
+                            Type = type,
                             Lang = lang,
                             Content = content,
                             ContentData = contentData
@@ -45,6 +60,9 @@ namespace DotnetMnemoScheme.Helpers
                     title: title, 
                     input: new LayoutHandlerInput
                     {
+                        Id = id,
+                        City = city,
+                        Type = type,
                         Lang = lang,
                         Content = content,
                         ContentData = contentData
@@ -62,13 +80,16 @@ namespace DotnetMnemoScheme.Helpers
             };
         }
 
-        protected LayoutHandlerOutput DefaultLayoutHandler(string title, LayoutHandlerInput input)
+        protected LayoutHandlerOutput DefaultLayoutHandler(string? title, LayoutHandlerInput input)
         {
             return new LayoutHandlerOutput
             {
                 Content = "~/Views/Layouts/DefaultLayout.cshtml",
                 ContentData = new DefaultLayoutModel
                 {
+                    Id = input.Id,
+                    City = input.City,
+                    Type = input.Type,
                     Title = title,
                     Lang = input.Lang,
                     Content = input.Content,
@@ -84,6 +105,10 @@ namespace DotnetMnemoScheme.Helpers
                 Content = "~/Views/Layouts/MainLayout.cshtml",
                 ContentData = new MainLayoutModel
                 {
+                    Id = input.Id,
+                    City = input.City,
+                    Range = input.Range,
+                    Type = input.Type,
                     Lang = input.Lang,
                     Content = input.Content,
                     ContentData = input.ContentData

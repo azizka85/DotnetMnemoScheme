@@ -13,7 +13,9 @@ namespace DotnetMnemoScheme.Translations
                 { "Karaganda", "Karaganda" },
                 { "Routes", "Routes" },
                 { "Route", "Route" },
-                { "Select an appropriate route", "Select an appropriate route" }
+                { "Select an appropriate route", "Select an appropriate route" },
+                { "Trolleybus", "Trolleybus" },
+                { "Bus", "Bus" }
             };
         }
     }

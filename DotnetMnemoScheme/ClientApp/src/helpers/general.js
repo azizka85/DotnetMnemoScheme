@@ -51,7 +51,7 @@ async function loadContent(parent, firstTime, layoutNames) {
 
     const layoutNamesToLoad = []
 
-    for(let layoutName of layoutNames) {
+    for(const layoutName of layoutNames) {
       if(!(layoutName in layouts)) {
         layoutNamesToLoad.push(layoutName)
       }
@@ -78,7 +78,7 @@ async function loadTranslation(lang) {
   /**
    * @type {import('../data/settings').Settings?}
    */
-  const settings = window.settings
+  const settings = window.mnemoScheme?.settings
 
   const pageRoot = settings?.pageRoot ?? '/'
 

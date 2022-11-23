@@ -19,12 +19,12 @@ public class RequestHelper
         this.stringHelper = stringHelper;
     }
     
-    // TODO: Potential error
     public string Fragment(string path, string root)
     {
         if (root != "/")
         {
-            path = path.Replace(root, "");
+            var regex = new Regex(root);
+            path = regex.Replace(path, "", 1);
         }
 
         return path.Trim('/');
@@ -132,11 +132,34 @@ public class RequestHelper
                "?" +
                GetQueryParameters(httpContext.Request.Query);
     }
-
-    /*
-     public string SetCityPath(HttpContext httpContext, string city)
+    
+    public string SetCityPath(string lang, string city)
     {
-        httpContext.GetRouteValue("")
+        return $"{lang}/{city}";
     }
-     */
+
+    public string SetCityPath(string lang, string city, IQueryCollection query)
+    {
+        return $"{SetCityPath(lang, city)}?{GetQueryParameters(query)}";
+    }
+
+    public string SetRoutesRangePath(string lang, string city, string range)
+    {
+        return $"{SetCityPath(lang, city)}/{range}";
+    }
+
+    public string SetRoutesRangePath(string lang, string city, string range, IQueryCollection query)
+    {
+        return $"{SetRoutesRangePath(lang, city, range)}?{GetQueryParameters(query)}";
+    }
+
+    public string SetRoutePath(string lang, string city, string range, string type, int id)
+    {
+        return $"{SetRoutesRangePath(lang, city, range)}/{type}/{id}";
+    }
+
+    public string SetRoutePath(string lang, string city, string range, string type, int id, IQueryCollection query)
+    {
+        return $"{SetRoutePath(lang, city, range, type, id)}?{GetQueryParameters(query)}";
+    }
 }
