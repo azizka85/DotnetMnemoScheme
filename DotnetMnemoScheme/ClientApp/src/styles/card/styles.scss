@@ -1,0 +1,25 @@
+@use '../functions' as global-functions;
+
+@use '../theme' as global-theme;
+
+@use '../variables' as global-variables;
+@use './variables';
+
+.card {
+  display: flex;
+  flex-direction: column;
+  background-color: global-functions.property(background, global-variables.$background);  
+  border-radius: variables.$border-radius;
+  box-shadow: global-functions.property(box-shadow-sm, global-variables.$box-shadow-sm);   
+  transition: box-shadow global-variables.$transition-time linear;
+
+  &:hover {
+    box-shadow: global-functions.property(box-shadow, global-variables.$box-shadow);   
+  }
+
+  &-body {
+    flex: 1 1 auto;
+    padding: variables.$padding;
+    color: global-functions.property(text-background-primary, global-theme.$text-background-primary); 
+  }
+}
