@@ -1,5 +1,7 @@
 @use './general/styles' as general-styles;
 
+@use './card/styles.scss' as card-styles;
+
 @use './button/styles' as button-styles;
 
 @use './loader/styles' as loader-styles;

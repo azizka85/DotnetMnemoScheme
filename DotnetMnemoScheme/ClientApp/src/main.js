@@ -1,17 +1,11 @@
 const { Router, RouteNavigator } = require('@azizka/router')
-const { PromiseQueue } = require('@azizka/promise-queue')
 const { Translator } = require('@azizka/i18n')
 
 const { LoaderPage } = require('./views/pages/loader')
 
 const { loadPage } = require('./helpers/view')
 
-const { inject, languages } = require('./globals')
-
-/**
- * @type {PromiseQueue<import('./data/task-data').TaskData>}
- */
-const queue = new PromiseQueue()
+const { inject, languages, queue } = require('./globals')
 
 window.addEventListener('DOMContentLoaded', () => {
   let firstTime = true
@@ -39,7 +33,6 @@ window.addEventListener('DOMContentLoaded', () => {
       queue.stop()
     
       loadPage(
-        queue,
         page.match?.[0] || settings.defaultLanguage || 'ru',
         page, 
         'routes', 

@@ -1,7 +1,59 @@
 ﻿@inject DotnetMnemoScheme.Helpers.LanguageHelper languageHelper
-@using Microsoft.AspNetCore.Http.Extensions
+@inject DotnetMnemoScheme.Helpers.RequestHelper requestHelper
 @model DotnetMnemoScheme.ViewModels.Routes.RouteModel
 
-<h1 class="text-primary">@languageHelper.Translate(@Model.Lang, "Route") - @Model.Id</h1>
-
-<p>@Context.Request.Path</p>
+<div data-page="routes-page" class="flex flex-vertical">
+    <div class="flex mb-1">
+        <div class="btn-vertical-container">
+            <a 
+                href="@requestHelper.SetQueryParameter(Context, "navigation", new StringValues("1"))" 
+                class="btn btn-light btn-min"
+                data-routes-page-button="navigation"
+            >
+                <svg class="btn-icon btn-icon-light btn-icon-min" viewBox="0 0 16 16">
+                    <path 
+                        fill-rule="evenodd" 
+                        d="
+                      M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 
+                      .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 
+                      0 1H3a.5.5 0 0 1-.5-.5z
+                  "
+                    />
+                </svg>
+            </a>
+        </div>
+        <div class="space-mid"></div>
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h1>Mnemo scheme</h1>
+            </div>
+        </div>
+        <noscript>
+            <div class="space-mid"></div>
+            <div class="btn-vertical-container">
+                <a
+                    href="@requestHelper.SetQueryParameter(Context, "time", new StringValues("" + (DateTime.Now - new DateTime(2022, 11, 24)).TotalSeconds))"
+                    class="btn btn-light btn-min"
+                >
+                    <svg class="btn-icon btn-icon-light btn-icon-min" viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                      <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                    </svg>
+                </a>
+            </div>
+        </noscript>
+    </div>
+    <div class="flex flex-fill">
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h1>Content</h1>
+            </div>
+        </div>
+        <div class="space-mid"></div>
+        <div class="card flex-fill">
+            <div class="card-body">
+                <h1>Content</h1>
+            </div>
+        </div>
+    </div>
+</div>

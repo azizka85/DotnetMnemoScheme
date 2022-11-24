@@ -1,5 +1,3 @@
-const { PromiseQueue } = require('@azizka/promise-queue')
-
 const { TaskStatus } = require('../data/task-status')
 
 const { DefaultLayout } = require('../views/layouts/default')
@@ -9,7 +7,7 @@ const { LoaderPage } = require('../views/pages/loader')
 const { toCamel } = require('./string')
 const { loadTranslation } = require('./general')
 
-const { layouts, languages, views } = require('../globals')
+const { layouts, languages, views, queue } = require('../globals')
 
 function hideSplash() {
   const splashElem = document.getElementById('splash')
@@ -96,14 +94,13 @@ async function loadLayouts(lang, page, layoutNames, firstLoad, firstTime) {
 }
 
 /**
- * @param {PromiseQueue<import('../data/task-data').TaskData>} queue 
  * @param {string} lang 
  * @param {import('../data/client-page').ClientPage} page 
  * @param {string} name 
  * @param {string[]} layoutNames 
  * @param {boolean} firstTime 
  */
-function loadPage(queue, lang, page, name, layoutNames, firstTime) {
+function loadPage(lang, page, name, layoutNames, firstTime) {
   /**
    * @type {HTMLElement?}
    */

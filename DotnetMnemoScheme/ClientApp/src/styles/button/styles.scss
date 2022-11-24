@@ -19,24 +19,17 @@
   box-shadow: global-functions.property(box-shadow-sm, global-variables.$box-shadow-sm);
   padding: 0 variables.$padding-horizontal;
   text-decoration: none;
-  transition: box-shadow global-variables.$transition-time linear;
-  
-  &-space {
-    width: variables.$space-width;
-    
-    &-min {
-      width: variables.$space-width-min;
-    }
-  }
-  
-  &-flex {
-    display: flex;
-  }
+  transition: box-shadow global-variables.$transition-time linear;  
   
   &-container {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+  }
+
+  &-vertical-container {
+    display: flex;
+    flex-direction: column;
   }
   
   &-icon {

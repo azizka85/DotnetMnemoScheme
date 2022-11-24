@@ -1,10 +1,16 @@
+// sizes
+$space-width: 1rem !default;
+$space-width-min: 0.25rem !default;
+$space-width-mid: 0.5rem !default;
+
 // margin & padding
-$margin-top: 1rem;
-$margin-bottom: 1rem;
-$margin: 1rem;
+$margin-top: 1rem !default;
+$margin-bottom: 1rem !default;
+$margin: 1rem !default;
 
-$padding: 1rem;
+$padding: 1rem !default;
+$padding-link: 0.5rem !default;
 
-$margin-min-right: 0.25rem;
+$margin-min: 0.25rem !default;
 
 

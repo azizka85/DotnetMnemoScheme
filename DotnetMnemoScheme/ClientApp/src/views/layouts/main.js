@@ -5,7 +5,8 @@ const { loadTranslation } = require('../../helpers/general')
 const { changeLangPath, toggleQueryParameter } = require('../../helpers/request')
 const { capitalize } = require('../../helpers/string')
 
-const { languages } = require('../../globals')
+const { languages, queue } = require('../../globals')
+const { TaskStatus } = require('../../data/task-status')
 
 /**
  * @implements {import('../view').View}
@@ -53,6 +54,12 @@ class MainLayout extends BaseLayout {
    * @protected
    */
   routesButton = null
+
+  /**
+   * @type {HTMLElement?}
+   * @protected
+   */
+  resetButton = null
 
   /**
    * @type {NodeListOf<HTMLElement>?}
@@ -159,6 +166,7 @@ class MainLayout extends BaseLayout {
       this.navigationButton = this.node.querySelector('[data-main-layout-button="navigation"]')
       this.cityButtons = this.node.querySelectorAll('[data-main-layout-button="city"]')
       this.routesButton = this.node.querySelector('[data-main-layout-button="routes"]')
+      this.resetButton = this.node.querySelector('[data-main-layout-link="reset"]')
       this.rangeButtons = this.node.querySelectorAll('[data-main-layout-range]')      
       this.routeButtons = this.node.querySelectorAll('[data-main-layout-route]')                        
       this.linkButtons = this.node.querySelectorAll('[data-main-layout-button]')       
@@ -297,6 +305,21 @@ class MainLayout extends BaseLayout {
         this.routesButton.textContent = translator.translate('Routes')
       }
 
+      if(this.resetButton) {
+        this.resetButton.setAttribute(
+          'href',
+          `${pageRoot + lang}/${city + location.search}`
+        )
+
+        this.resetButton.textContent = translator.translate('Reset')
+
+        if(!rangeBegin && !rangeEnd) {
+          this.resetButton.classList.add('link-hide')
+        } else {
+          this.resetButton.classList.remove('link-hide')          
+        }
+      }
+
       if(this.routesTxt) {
         this.routesTxt.textContent = translator.translate('Routes')
       }
@@ -383,15 +406,36 @@ class MainLayout extends BaseLayout {
      */
     const lang = event.target?.getAttribute?.('data-main-layout-language')
 
-    // TODO: Need to change
-    if(!lang) {
-      throw new Error(`Language ${lang} is empty`)
-    } else {
-      if(!(lang in languages)) {
-        await loadTranslation(lang)            
+    queue.addTask(async (data) => {
+      try {
+        if(!lang) {
+          throw new Error(`Language ${lang} is empty`)
+        } else {
+          if(!(lang in languages)) {
+            await loadTranslation(lang)            
+          }      
+        }
+        data = {
+          status: TaskStatus.completed
+        }
+      } catch(err) {
+        data = {
+          status: TaskStatus.error,
+          data: err
+        }
       }
-      await navigateHandler(event)
-    }
+
+      return data
+    })    
+
+    queue.addTask(async (data) => {
+      if(!data || data.status == TaskStatus.completed) {
+        await navigateHandler(event)
+      } else if(data?.status === TaskStatus.error) {
+        // TODO: Need to change
+        console.error(data?.data)
+      }
+    })
   }
 }
 

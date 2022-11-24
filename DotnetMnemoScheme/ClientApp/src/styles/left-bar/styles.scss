@@ -1,5 +1,7 @@
 ﻿@use '../functions' as global-functions;
 
+@use '../theme' as global-theme;
+
 @use '../variables' as global-variables;
 @use './variables';
 
@@ -24,7 +26,7 @@
   
   padding: variables.$left-bar-padding;
   
-  transition: transform global-variables.$transition-time ease-in-out;
+  transition: transform global-variables.$transition-time ease-in-out;  
   
   &-open {
     transform: translate(0, 0);

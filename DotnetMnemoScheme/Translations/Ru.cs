@@ -15,7 +15,8 @@ namespace DotnetMnemoScheme.Translations
                 { "Route", "Маршрут" },
                 { "Select an appropriate route", "Выберите необходимый маршрут" },
                 { "Trolleybus", "Троллейбус" },
-                { "Bus", "Автобус" }
+                { "Bus", "Автобус" },
+                { "Reset", "Сбросить" }
             };
         }
     }

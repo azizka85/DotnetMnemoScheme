@@ -13,9 +13,12 @@ html, body {
 
 [data-layout] {
   display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
 [data-layout], [data-page] {
+  flex: 1 1 auto;
   opacity: 1;
   transition: opacity global-variables.$transition-time linear;
 
@@ -25,6 +28,9 @@ html, body {
 }
 
 .main-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   padding: variables.$padding;
   
   *::selection {
@@ -35,6 +41,46 @@ html, body {
 
 .text-primary {
   color: global-functions.property(text-background-primary, global-theme.$text-background-primary);
+}
+
+.link {
+  outline: none;
+  padding: variables.$padding-link;
+  text-decoration: none;
+  font-weight: bold;
+  color: global-functions.property(text-background-primary, global-theme.$text-background-primary);
+
+  &-hide {
+    display: none;
+  }
+}
+
+.flex {
+  display: flex;
+
+  &-space-between {
+    justify-content: space-between;  
+  }  
+
+  &-vertical {
+    flex-direction: column;
+  }
+
+  &-fill {
+    flex: 1 1 auto;
+  }
+}
+
+.space {
+  width: variables.$space-width;
+  
+  &-min {
+    width: variables.$space-width-min;
+  }
+
+  &-mid {
+    width: variables.$space-width-mid;
+  }
 }
 
 .mb-1 {
@@ -50,5 +96,9 @@ html, body {
 }
 
 .mmr-1 {
-  margin-right: variables.$margin-min-right;
+  margin-right: variables.$margin-min;
+}
+
+.mm-1 {
+  margin: variables.$margin-min;
 }
